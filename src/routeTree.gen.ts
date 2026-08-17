@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalysisRouteImport } from './routes/analysis'
+import { Route as DeploymentRouteImport } from './routes/deployment'
 import { Route as HeatmapRouteImport } from './routes/heatmap'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const AnalysisRoute = AnalysisRouteImport.update({
   path: '/analysis',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DeploymentRoute = DeploymentRouteImport.update({
+  id: '/deployment',
+  path: '/deployment',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HeatmapRoute = HeatmapRouteImport.update({
   id: '/heatmap',
   path: '/heatmap',
@@ -32,30 +38,34 @@ const HeatmapRoute = HeatmapRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
+  '/deployment': typeof DeploymentRoute
   '/heatmap': typeof HeatmapRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
+  '/deployment': typeof DeploymentRoute
   '/heatmap': typeof HeatmapRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
+  '/deployment': typeof DeploymentRoute
   '/heatmap': typeof HeatmapRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/analysis' | '/heatmap'
+  fullPaths: '/' | '/analysis' | '/deployment' | '/heatmap'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analysis' | '/heatmap'
-  id: '__root__' | '/' | '/analysis' | '/heatmap'
+  to: '/' | '/analysis' | '/deployment' | '/heatmap'
+  id: '__root__' | '/' | '/analysis' | '/deployment' | '/heatmap'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalysisRoute: typeof AnalysisRoute
+  DeploymentRoute: typeof DeploymentRoute
   HeatmapRoute: typeof HeatmapRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnalysisRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/deployment': {
+      id: '/deployment'
+      path: '/deployment'
+      fullPath: '/deployment'
+      preLoaderRoute: typeof DeploymentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/heatmap': {
       id: '/heatmap'
       path: '/heatmap'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalysisRoute: AnalysisRoute,
+  DeploymentRoute: DeploymentRoute,
   HeatmapRoute: HeatmapRoute,
 }
 export const routeTree = rootRouteImport
