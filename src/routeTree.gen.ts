@@ -15,6 +15,7 @@ import { Route as CctvRouteImport } from './routes/cctv'
 import { Route as DeploymentRouteImport } from './routes/deployment'
 import { Route as HeatmapRouteImport } from './routes/heatmap'
 import { Route as IncidentsRouteImport } from './routes/incidents'
+import { Route as PersonnelRouteImport } from './routes/personnel'
 import { Route as ReportsRouteImport } from './routes/reports'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const IncidentsRoute = IncidentsRouteImport.update({
   path: '/incidents',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PersonnelRoute = PersonnelRouteImport.update({
+  id: '/personnel',
+  path: '/personnel',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/deployment': typeof DeploymentRoute
   '/heatmap': typeof HeatmapRoute
   '/incidents': typeof IncidentsRoute
+  '/personnel': typeof PersonnelRoute
   '/reports': typeof ReportsRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/deployment': typeof DeploymentRoute
   '/heatmap': typeof HeatmapRoute
   '/incidents': typeof IncidentsRoute
+  '/personnel': typeof PersonnelRoute
   '/reports': typeof ReportsRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/deployment': typeof DeploymentRoute
   '/heatmap': typeof HeatmapRoute
   '/incidents': typeof IncidentsRoute
+  '/personnel': typeof PersonnelRoute
   '/reports': typeof ReportsRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/deployment'
     | '/heatmap'
     | '/incidents'
+    | '/personnel'
     | '/reports'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/deployment'
     | '/heatmap'
     | '/incidents'
+    | '/personnel'
     | '/reports'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/deployment'
     | '/heatmap'
     | '/incidents'
+    | '/personnel'
     | '/reports'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   DeploymentRoute: typeof DeploymentRoute
   HeatmapRoute: typeof HeatmapRoute
   IncidentsRoute: typeof IncidentsRoute
+  PersonnelRoute: typeof PersonnelRoute
   ReportsRoute: typeof ReportsRoute
 }
 
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IncidentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/personnel': {
+      id: '/personnel'
+      path: '/personnel'
+      fullPath: '/personnel'
+      preLoaderRoute: typeof PersonnelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reports': {
       id: '/reports'
       path: '/reports'
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   DeploymentRoute: DeploymentRoute,
   HeatmapRoute: HeatmapRoute,
   IncidentsRoute: IncidentsRoute,
+  PersonnelRoute: PersonnelRoute,
   ReportsRoute: ReportsRoute,
 }
 export const routeTree = rootRouteImport
