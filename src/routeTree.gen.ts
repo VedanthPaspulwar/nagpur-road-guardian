@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalysisRouteImport } from './routes/analysis'
 import { Route as DeploymentRouteImport } from './routes/deployment'
 import { Route as HeatmapRouteImport } from './routes/heatmap'
+import { Route as IncidentsRouteImport } from './routes/incidents'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const HeatmapRoute = HeatmapRouteImport.update({
   path: '/heatmap',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IncidentsRoute = IncidentsRouteImport.update({
+  id: '/incidents',
+  path: '/incidents',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
   '/deployment': typeof DeploymentRoute
   '/heatmap': typeof HeatmapRoute
+  '/incidents': typeof IncidentsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
   '/deployment': typeof DeploymentRoute
   '/heatmap': typeof HeatmapRoute
+  '/incidents': typeof IncidentsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/analysis': typeof AnalysisRoute
   '/deployment': typeof DeploymentRoute
   '/heatmap': typeof HeatmapRoute
+  '/incidents': typeof IncidentsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/analysis' | '/deployment' | '/heatmap'
+  fullPaths: '/' | '/analysis' | '/deployment' | '/heatmap' | '/incidents'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analysis' | '/deployment' | '/heatmap'
-  id: '__root__' | '/' | '/analysis' | '/deployment' | '/heatmap'
+  to: '/' | '/analysis' | '/deployment' | '/heatmap' | '/incidents'
+  id: '__root__' | '/' | '/analysis' | '/deployment' | '/heatmap' | '/incidents'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   AnalysisRoute: typeof AnalysisRoute
   DeploymentRoute: typeof DeploymentRoute
   HeatmapRoute: typeof HeatmapRoute
+  IncidentsRoute: typeof IncidentsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HeatmapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/incidents': {
+      id: '/incidents'
+      path: '/incidents'
+      fullPath: '/incidents'
+      preLoaderRoute: typeof IncidentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalysisRoute: AnalysisRoute,
   DeploymentRoute: DeploymentRoute,
   HeatmapRoute: HeatmapRoute,
+  IncidentsRoute: IncidentsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
