@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Map as LeafletMap, LayerGroup } from "leaflet";
 import { NAGPUR_CENTER, RISK_COLORS, riskLabel, type ScoredLocation } from "@/lib/traffic-data";
 
@@ -15,6 +15,7 @@ export default function NagpurMap({ locations, onSelect, onDeploy, height = "520
   const layerRef = useRef<LayerGroup | null>(null);
   const handlers = useRef({ onSelect, onDeploy });
   handlers.current = { onSelect, onDeploy };
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -23,12 +24,13 @@ export default function NagpurMap({ locations, onSelect, onDeploy, height = "520
       await import("leaflet/dist/leaflet.css");
       if (cancelled || !containerRef.current || mapRef.current) return;
       const map = L.map(containerRef.current, { center: NAGPUR_CENTER, zoom: 12, zoomControl: true });
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "&copy; OpenStreetMap contributors",
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+        attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
         maxZoom: 19,
       }).addTo(map);
       mapRef.current = map;
       layerRef.current = L.layerGroup().addTo(map);
+      setReady(true);
       setTimeout(() => map.invalidateSize(), 200);
     })();
     return () => {
@@ -36,6 +38,7 @@ export default function NagpurMap({ locations, onSelect, onDeploy, height = "520
       mapRef.current?.remove();
       mapRef.current = null;
       layerRef.current = null;
+      setReady(false);
     };
   }, []);
 
@@ -100,7 +103,7 @@ export default function NagpurMap({ locations, onSelect, onDeploy, height = "520
     return () => {
       cancelled = true;
     };
-  }, [locations]);
+  }, [locations, ready]);
 
   return <div ref={containerRef} style={{ height }} className="w-full rounded-xl" />;
 }
