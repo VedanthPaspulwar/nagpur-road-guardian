@@ -213,7 +213,7 @@
   border-color: var(--glass-border) !important;
 }
 .leaflet-bar { border: none !important; }
-.leaflet-tile { filter: invert(1) hue-rotate(190deg) brightness(0.85) contrast(0.9) saturate(0.7); }
+.leaflet-tile { filter: none !important; }
 .risk-marker-dot {
   border-radius: 9999px;
   animation: pulse-risk 2.4s ease-in-out infinite;
